@@ -30,5 +30,7 @@ void Router::OnPacketTransmitted(Computer* comp) {
 
 void Router::PrintStatistics() {
   cout << "Received " << packetsArrived_ << " packets" << endl;
-  cout << "Average delay time " << totalPacketDelay_ / packetsArrived_ << " bit-time" << endl;
+  if (packetsArrived_ > 0) {
+    cout << "Average delay time " << totalPacketDelay_ / packetsArrived_ << " bit-time" << endl;
+  }
 }
