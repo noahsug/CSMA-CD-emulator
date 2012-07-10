@@ -23,13 +23,13 @@ bool Event::operator>=(const Event& e) {
 
 double ArrivalEvent::ARRIAVL_RATE = 0;
 
-ArrivalEvent::ArrivalEvent(unsigned long long time, Computer* dest) {
+ArrivalEvent::ArrivalEvent(Computer* dest) {
   dest_ = dest;
   double rand = Random::GetDouble();
   time_ = time + (unsigned long long)((-1 / ARRIAVL_RATE) * log(1 - rand));
 }
 
-MediumBusyEvent::MediumBusyEvent(unsigned long long time, Computer* dest, Computer* source) {
+MediumBusyEvent::MediumBusyEvent(Computer* dest, Computer* source) {
   dest_ = dest;
   time_ = 5; // TODO this will not always be 5 :O
 }
