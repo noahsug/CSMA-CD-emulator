@@ -3,13 +3,14 @@
 #include "Clock.h"
 #include "Environment.h"
 #include "Events.h"
+#include "Router.h"
 
 using std::vector;
 
 extern vector<Computer> computers;
 
 void Computer::OnArrival() {
-  //Router::OnPacketGenerated(this);
+  Router::GetInstance().OnPacketGenerated(this);
   packet_queue_size_++;
   events_->Insert(new ArrivalEvent(this));
   if (state_ == IDLE) {
@@ -98,9 +99,9 @@ void Computer::OnBackoffDone() {
 
 void Computer::OnPacketReceived() {
   if (last_jam_time_ - Environment::PROP_TIME < Clock::GetTime()) {
-    //Router::OnPacketDropped(this);
+    Router::GetInstance().OnPacketDropped(this);
   } else {
-    //Router::OnPacketTransmitted(this);
+    Router::GetInstance().OnPacketTransmitted(this);
   }
 }
 
