@@ -15,7 +15,7 @@ class Event {
 
 class ArrivalEvent : public Event {
  public:
-  ArrivalEvent(unsigned long long clock);
+  ArrivalEvent(unsigned long long time);
   virtual EventType GetEventType() { return EVENT_ARRIVAL; }
 };
 
