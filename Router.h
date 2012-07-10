@@ -12,7 +12,7 @@ class Router {
   static Router instance_;
 
  public:
-  static Router GetInstance() { return instance_; }
+  static Router& GetInstance() { return instance_; }
   void OnPacketDropped(Computer*);
   void OnPacketGenerated(Computer*);
   void OnPacketTransmitted(Computer*);
