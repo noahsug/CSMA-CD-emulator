@@ -22,5 +22,5 @@ bool Event::operator>=(const Event& e) {
 
 ArrivalEvent::ArrivalEvent(unsigned long long time, double arrival_rate) {
   double rand = Random::GetDouble();
-  time_ = time + (-1 / arrival_rate) * log(1 - rand);
+  time_ = time + (unsigned long long)((-1 / arrival_rate) * log(1 - rand));
 }
