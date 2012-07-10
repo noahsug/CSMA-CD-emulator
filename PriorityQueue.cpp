@@ -9,6 +9,10 @@ PriorityQueue::~PriorityQueue() {
   }
 }
 
+bool PriorityQueue::Empty() {
+  return list_.empty();
+}
+
 void PriorityQueue::Insert(Event* obj) {
   List::iterator it;
   for (it = list_.begin(); it != list_.end(); ++it) {

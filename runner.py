@@ -21,7 +21,7 @@ if argc > 3:
 if argc > 4:
     L = sys.argv[4]
 if argc > 5:
-    maxN = sys.argv[5]
+    maxN = int(sys.argv[5])
 
 f = open('%s.csv' % name, 'w')
 

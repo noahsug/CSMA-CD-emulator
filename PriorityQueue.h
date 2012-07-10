@@ -10,6 +10,7 @@ class PriorityQueue {
   PriorityQueue() {}
   ~PriorityQueue();
 
+  bool Empty();
   void Insert(Event* obj);
   Event* Remove();
   void Remove(unsigned long long id);

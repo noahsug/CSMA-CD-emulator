@@ -8,6 +8,7 @@ class Environment {
   static double LAN_SPEED;
   static unsigned NUM_COMPS;
   static unsigned PROP_TIME;
+  static bool GameOverMan;
 };
 
 #endif

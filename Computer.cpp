@@ -17,7 +17,11 @@ void Computer::OnArrival() {
 
   Router::GetInstance().OnPacketGenerated(this);
   packet_queue_size_++;
-  events_->Insert(new ArrivalEvent(this));
+
+  if (!Environment::GameOverMan) {
+    events_->Insert(new ArrivalEvent(this));
+  }
+
   if (state_ == IDLE) {
     state_ = SENSING;
     events_->Insert(new MediumSensedEvent(this));

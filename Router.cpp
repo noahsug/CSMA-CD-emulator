@@ -32,7 +32,7 @@ void Router::OnPacketTransmitted(Computer* comp) {
 }
 
 void Router::PrintStatistics() {
-  unsigned long long totalTime = (unsigned long long)(Clock::GetTime() / (Environment::LAN_SPEED * 1000000));
+  double totalTime = (Clock::GetTime() / (Environment::LAN_SPEED * 1000000));
   cout << "Received " << packetsArrived_ << " packets" << endl;
   cout << "Dropped " << packetsDropped_ << " packets" << endl;
   cout << "Took " << totalTime << " sec (" << Clock::GetTime() << " bit-time)" << endl;

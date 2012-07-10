@@ -33,6 +33,7 @@ class Computer {
     , last_jam_time_((unsigned long long)-1) {}
 
   unsigned long GetBackoff();
+  unsigned PacketsInQueue() { return packet_queue_size_; }
 
   void OnArrival();
   void OnMediumSensed();
