@@ -11,6 +11,7 @@
 using std::vector;
 
 unsigned long long Clock::time_ = 0;
+static const unsigned NUM_EVENTS = 10; // number of events before simulation ends
 
 vector<Computer> computers;
 
@@ -29,8 +30,9 @@ void Simulation::Run() {
     events.Insert(new ArrivalEvent(&computers[i]));
   }
 
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < NUM_EVENTS; i++) {
     Event* event = events.Remove();
+    Clock::SetTime(event->GetTime())
     event->HandleEvent();
     delete event;
   }

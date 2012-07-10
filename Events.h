@@ -17,8 +17,8 @@ class Event {
     EVENT_BACKOFF_DONE // backoff finished
   };
 
-  virtual unsigned long long GetEventTime() { return time_; }
-  virtual EventType GetEventType() = 0;
+  virtual unsigned long long GetTime() { return time_; }
+  virtual EventType GetType() = 0;
   virtual void HandleEvent() = 0;
 
   bool operator<(const Event&);
@@ -34,44 +34,49 @@ class Event {
 class ArrivalEvent : public Event {
  public:
   ArrivalEvent(Computer* dest);
-  virtual EventType GetEventType() { return EVENT_ARRIVAL; }
+  virtual EventType GetType() { return EVENT_ARRIVAL; }
   virtual void HandleEvent() { dest_->OnArrival(); }
+};
 
-  static double ARRIAVL_RATE;
+class MediumSensedEvent : public Event {
+ public:
+  MediumSensedEvent(Computer* dest);
+  virtual EventType GetType() { return EVENT_MEDIUM_SENSED; }
+  virtual void HandleEvent() { dest_->OnMediumSensed(); }
 };
 
 class MediumBusyEvent : public Event {
  public:
   MediumBusyEvent(Computer* dest, Computer* source);
-  virtual EventType GetEventType() { return EVENT_MEDIUM_BUSY; }
+  virtual EventType GetType() { return EVENT_MEDIUM_BUSY; }
   virtual void HandleEvent() { dest_->OnMediumBusy(); }
 };
 
 class MediumFreeEvent : public Event {
  public:
   MediumFreeEvent(Computer* dest);
-  virtual EventType GetEventType() { return EVENT_MEDIUM_FREE; }
+  virtual EventType GetType() { return EVENT_MEDIUM_FREE; }
   virtual void HandleEvent() { dest_->OnMediumFree(); }
 };
 
 class TransmittedFrameEvent : public Event {
  public:
   TransmittedFrameEvent(Computer* dest);
-  virtual EventType GetEventType() { return EVENT_TRANSMITTED_FRAME; }
+  virtual EventType GetType() { return EVENT_TRANSMITTED_FRAME; }
   virtual void HandleEvent() { dest_->OnTransmittedFrame(); }
 };
 
 class JamEvent : public Event {
  public:
   JamEvent(Computer* dest);
-  virtual EventType GetEventType() { return EVENT_JAM; }
+  virtual EventType GetType() { return EVENT_JAM; }
   virtual void HandleEvent() { dest_->OnJam(); }
 };
 
 class BackoffDoneEvent : public Event {
  public:
   BackoffDoneEvent(Computer* dest);
-  virtual EventType GetEventType() { return EVENT_BACKOFF_DONE; }
+  virtual EventType GetType() { return EVENT_BACKOFF_DONE; }
   virtual void HandleEvent() { dest_->OnBackoffDone(); }
 };
 
