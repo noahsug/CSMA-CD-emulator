@@ -3,9 +3,13 @@
 
 #include "Computer.h"
 
+static unsigned long long global_id = 0;
+
 class Event {
  public:
-  Event() {}
+  Event() {
+    id_ = global_id++;
+  }
   
   enum EventType {
     EVENT_ARRIVAL, // frame arrived at comp
@@ -21,6 +25,8 @@ class Event {
   virtual unsigned long long GetTime() { return time_; }
   virtual EventType GetType() = 0;
   virtual void HandleEvent() = 0;
+  virtual Computer* GetDest() { return dest_; }
+  virtual unsigned long long GetId() { return id_; }
 
   bool operator<(const Event&);
   bool operator>(const Event&);
@@ -30,6 +36,8 @@ class Event {
  protected:
   Computer* dest_;
   unsigned long long time_;
+
+  unsigned long long id_;
 };
 
 class ArrivalEvent : public Event {

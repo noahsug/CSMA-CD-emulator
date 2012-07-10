@@ -2,6 +2,13 @@
 
 #include "Events.h"
 
+PriorityQueue::~PriorityQueue() {
+  List::iterator it;
+  for (it = list_.begin(); it != list_.end(); ++it) {
+    delete *it;
+  }
+}
+
 void PriorityQueue::Insert(Event* obj) {
   List::iterator it;
   for (it = list_.begin(); it != list_.end(); ++it) {
@@ -23,10 +30,11 @@ Event* PriorityQueue::Remove() {
   return obj;
 }
 
-void PriorityQueue::Remove(Event* obj) {
+void PriorityQueue::Remove(unsigned long long id) {
   List::iterator it;
   for (it = list_.begin(); it != list_.end(); ++it) {
-    if (obj == *it) {
+    if (id == (*it)->GetId()) {
+      delete *it;
       list_.erase(it);
       return;
     }

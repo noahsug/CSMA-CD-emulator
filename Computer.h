@@ -17,7 +17,7 @@ class Computer {
   static const unsigned SENSE_MEDIUM_TIME = 96;
 
   enum State {
-    IDLE,
+    IDLE = 0,
     SENSING,
     WAITING_TO_TRANSMIT,
     TRANSMITTING,
@@ -51,7 +51,7 @@ class Computer {
   unsigned packet_queue_size_;
   unsigned long long last_jam_time_;
 
-  std::vector<Event*> cancellable_events_;
+  std::vector<unsigned long long> cancellable_events_;
 
   void CancelEvents();
 };

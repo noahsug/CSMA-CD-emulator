@@ -1,5 +1,5 @@
 all:
-	g++ *.cpp -o Simulation
+	g++ *.cpp -g -o Simulation
 
 clean:
 	rm Simulation

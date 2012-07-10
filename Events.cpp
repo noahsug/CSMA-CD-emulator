@@ -3,6 +3,7 @@
 #include "Computer.h"
 
 #include <cmath>
+#include <iostream>
 
 #include "Clock.h"
 #include "Random.h"
@@ -57,8 +58,10 @@ RaspberryJamEvent::RaspberryJamEvent(Computer* dest) {
 
 BackoffDoneEvent::BackoffDoneEvent(Computer* dest) {
   dest_ = dest;
-  time_ = Clock::GetTime() +
-      Computer::TP * Random::GetInt(2 >> (dest->GetBackoff() - 1));
+  unsigned long b = dest->GetBackoff();
+  unsigned long val = (1 >> b) - 1;
+  unsigned long rand = Random::GetInt(val);
+  time_ = Clock::GetTime() + Computer::TP * rand;
 }
 
 PacketReceivedEvent::PacketReceivedEvent(Computer* dest) {

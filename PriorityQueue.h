@@ -8,10 +8,11 @@ class Event;
 class PriorityQueue {
  public:
   PriorityQueue() {}
+  ~PriorityQueue();
 
   void Insert(Event* obj);
   Event* Remove();
-  void Remove(Event* obj);
+  void Remove(unsigned long long id);
 
   private:
    typedef std::list<Event*> List;

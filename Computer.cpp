@@ -10,21 +10,22 @@
 
 using std::vector;
 
-extern vector<Computer> computers;
+extern vector<Computer*> computers;
 
 void Computer::OnArrival() {
-  PRINT("OnArrival: " << this << std::endl);
+  PRINT(this << ": " << Clock::GetTime() << ": OnArrival" << std::endl);
 
   Router::GetInstance().OnPacketGenerated(this);
   packet_queue_size_++;
   events_->Insert(new ArrivalEvent(this));
   if (state_ == IDLE) {
+    state_ = SENSING;
     events_->Insert(new MediumSensedEvent(this));
   }
 }
 
 void Computer::OnMediumSensed() {
-  PRINT("OnMediumSensed: " << this << std::endl);
+  PRINT(this << ": " << Clock::GetTime() << ": OnMediumSensed" << std::endl);
 
   if (medium_busy_) {
     state_ = WAITING_TO_TRANSMIT;
@@ -33,40 +34,41 @@ void Computer::OnMediumSensed() {
     last_jam_time_ = (unsigned long long)-1;
     Event* trans = new TransmittedFrameEvent(this);
     events_->Insert(trans);
-    cancellable_events_.push_back(trans);
+    cancellable_events_.push_back(trans->GetId());
 
     for (unsigned i = 0; i < computers.size(); i++) {
-      if (&computers[i] != this) {
-        events_->Insert(new MediumBusyEvent(&computers[i]));
+      if (computers[i] != this) {
+        events_->Insert(new MediumBusyEvent(computers[i]));
       }
     }
   }
 }
 
 void Computer::OnMediumBusy() {
-  PRINT("OnMediumBusy: " << this << std::endl);
+  PRINT(this << ": " << Clock::GetTime() << ": OnMediumBusy" << std::endl);
 
   medium_busy_ = true;
 
   if (state_ == TRANSMITTING) {
     CancelEvents();
     for (unsigned i = 0; i < computers.size(); i++) {
-      if (&computers[i] != this) {
-        events_->Insert(new RaspberryJamEvent(&computers[i]));
+      if (computers[i] != this) {
+        events_->Insert(new RaspberryJamEvent(computers[i]));
       }
     }
     state_ = BACKING_OFF;
+    medium_busy_ = false;
     events_->Insert(new BackoffDoneEvent(this));
     last_jam_time_ = Clock::GetTime();
   } else {
     Event* free = new MediumFreeEvent(this);
     events_->Insert(free);
-    cancellable_events_.push_back(free);
+    cancellable_events_.push_back(free->GetId());
   }
 }
 
 void Computer::OnMediumFree() {
-  PRINT("OnMediumFree: " << this << std::endl);
+  PRINT(this << ": " << Clock::GetTime() << ": OnMediumFree" << std::endl);
   medium_busy_ = false;
   if (state_ == WAITING_TO_TRANSMIT) {
     state_ = SENSING;
@@ -75,10 +77,10 @@ void Computer::OnMediumFree() {
 }
 
 void Computer::OnTransmittedFrame() {
-  PRINT("OnTransmittedFrame: " << this << std::endl);
+  PRINT(this << ": " << Clock::GetTime() << ": OnTransmittedFrame" << std::endl);
   Event* rec = new PacketReceivedEvent(this);
   events_->Insert(rec);
-  cancellable_events_.push_back(rec);
+  cancellable_events_.push_back(rec->GetId());
 
   packet_queue_size_--;
   if (packet_queue_size_ > 0) {
@@ -90,7 +92,7 @@ void Computer::OnTransmittedFrame() {
 }
 
 void Computer::OnRaspberryJam() {
-  PRINT("OnRaspberryJam: " << this << std::endl);
+  PRINT(this << ": " << Clock::GetTime() << ": OnRaspberryJam" << std::endl);
   last_jam_time_ = Clock::GetTime();
   if (state_ == TRANSMITTING) {
     CancelEvents();
@@ -100,18 +102,18 @@ void Computer::OnRaspberryJam() {
     medium_busy_ = true;
     Event* free = new MediumFreeEvent(this);
     events_->Insert(free);
-    cancellable_events_.push_back(free);
+    cancellable_events_.push_back(free->GetId());
   }
 }
 
 void Computer::OnBackoffDone() {
-  PRINT("OnBackoffDone: " << this << std::endl);
+  PRINT(this << ": " << Clock::GetTime() << ": OnBackoffDone" << std::endl);
   state_ = SENSING;
   events_->Insert(new MediumSensedEvent(this));
 }
 
 void Computer::OnPacketReceived() {
-  PRINT("OnPacketReceived: " << this << std::endl);
+  PRINT(this << ": " << Clock::GetTime() << ": OnPacketReceived" << std::endl);
   if (last_jam_time_ - Environment::PROP_TIME < Clock::GetTime()) {
     Router::GetInstance().OnPacketDropped(this);
   } else {
@@ -127,8 +129,10 @@ void Computer::CancelEvents() {
 }
 
 unsigned long Computer::GetBackoff() {
-  unsigned long ret = backoff_count_;
-  backoff_count_ = (backoff_count_ + 1) % Computer::KMAX;
-  return ret;
+  backoff_count_++;
+  if (backoff_count_ > Computer::KMAX) {
+    backoff_count_ = Computer::KMAX;
+  }
+  return backoff_count_;
 }
 
