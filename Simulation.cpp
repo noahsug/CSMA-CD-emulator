@@ -12,7 +12,7 @@
 using std::vector;
 
 unsigned long long Clock::time_ = 0;
-static const unsigned NUM_EVENTS = 10; // number of events before simulation ends
+static const unsigned NUM_EVENTS = 10000; // number of events before simulation ends
 
 vector<Computer> computers;
 

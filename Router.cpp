@@ -4,26 +4,27 @@
 #include <iostream>
 
 #include "Clock.h"
+#include "Debug.h"
 
 using namespace std;
 
 Router Router::instance_;
 
 void Router::OnPacketGenerated(Computer* comp) {
-  std::cerr << "OnPacketGenerated: " << comp << std::endl;
+  PRINT("OnPacketGenerated: " << comp << std::endl);
   queue<unsigned long long>& q = packetGeneratedTimes_[comp];
   q.push(Clock::GetTime());
 }
 
 void Router::OnPacketDropped(Computer* comp) {
-  std::cerr << "OnPacketDropped: " << comp << std::endl;
+  PRINT("OnPacketDropped: " << comp << std::endl);
   queue<unsigned long long>& q = packetGeneratedTimes_[comp];
   assert(!q.empty());
   q.pop();
 }
 
 void Router::OnPacketTransmitted(Computer* comp) {
-  std::cerr << "OnPacketTransmitted: " << comp << std::endl;
+  PRINT("OnPacketTransmitted: " << comp << std::endl);
   queue<unsigned long long>& q = packetGeneratedTimes_[comp];
   assert(!q.empty());
   packetsArrived_++;
