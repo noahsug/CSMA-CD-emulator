@@ -1,6 +1,8 @@
 #ifndef __COMPUTER_H__
 #define __COMPUTER_H__
 
+#include <vector>
+
 #include "PriorityQueue.h"
 
 class Event;
@@ -16,6 +18,7 @@ class Computer {
 
   enum State {
     IDLE,
+    SENSING,
     WAITING_TO_TRANSMIT,
     TRANSMITTING,
     BACKING_OFF,
@@ -32,6 +35,9 @@ class Computer {
   void OnMediumSensed();
   void OnMediumBusy();
   void OnMediumFree();
+  void OnTransmittedFrame();
+  void OnRaspberryJam();
+  void OnBackoffDone();
 
  private:
   PriorityQueue* events_;
@@ -39,6 +45,11 @@ class Computer {
   bool medium_busy_;
   unsigned backoff_count_;
   unsigned packet_queue_size_;
+
+  std::vector<Event*> cancellable_events_;
+
+  void CancelEvents();
 };
 
 #endif
+

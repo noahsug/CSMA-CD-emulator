@@ -13,6 +13,8 @@ using std::vector;
 unsigned long long Clock::time_ = 0;
 static const unsigned NUM_EVENTS = 10; // number of events before simulation ends
 
+vector<Computer> computers;
+
 Simulation::Simulation() {
   Run();
 }
@@ -22,9 +24,8 @@ void Simulation::Run() {
   Clock::SetTime(0);
 
   PriorityQueue events;
-  vector<Computer> computers;
 
-  for (int i = 0; i < NUM_COMPS; i++) {
+  for (int i = 0; i < Environment::NUM_COMPS; i++) {
     computers.push_back(Computer(&events));
     events.Insert(new ArrivalEvent(&computers[i]));
   }
@@ -36,3 +37,4 @@ void Simulation::Run() {
     delete event;
   }
 }
+

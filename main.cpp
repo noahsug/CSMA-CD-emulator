@@ -13,11 +13,11 @@ int main(int argc, char** argv) {
     return -1;
   }
 
-  NUM_COMPS = atoi(argv[1]);
-  ARRIVAL_RATE = atof(argv[2]);
-  LAN_SPEED = atof(argv[3]);
-  PACKET_LENGTH = atoi(argv[4]);
-  PROP_TIME = 2000 / LAN_SPEED;
+  Environment::NUM_COMPS = atoi(argv[1]);
+  Environment::ARRIVAL_RATE = atof(argv[2]);
+  Environment::LAN_SPEED = atof(argv[3]);
+  Environment::PACKET_LENGTH = atoi(argv[4]);
+  Environment::PROP_TIME = 2000 / Environment::LAN_SPEED;
 
   Simulation();
 }
