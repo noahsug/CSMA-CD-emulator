@@ -1,5 +1,7 @@
 #include "Computer.h"
 
+#include <iostream>
+
 #include "Clock.h"
 #include "Environment.h"
 #include "Events.h"
@@ -10,6 +12,8 @@ using std::vector;
 extern vector<Computer> computers;
 
 void Computer::OnArrival() {
+  std::cerr << "OnArrival: " << this << std::endl;
+
   Router::GetInstance().OnPacketGenerated(this);
   packet_queue_size_++;
   events_->Insert(new ArrivalEvent(this));
@@ -19,6 +23,8 @@ void Computer::OnArrival() {
 }
 
 void Computer::OnMediumSensed() {
+  std::cerr << "OnMediumSensed: " << this << std::endl;
+
   if (medium_busy_) {
     state_ = WAITING_TO_TRANSMIT;
   } else {
@@ -37,6 +43,8 @@ void Computer::OnMediumSensed() {
 }
 
 void Computer::OnMediumBusy() {
+  std::cerr << "OnMediumBusy: " << this << std::endl;
+
   medium_busy_ = true;
 
   if (state_ == TRANSMITTING) {
@@ -57,6 +65,7 @@ void Computer::OnMediumBusy() {
 }
 
 void Computer::OnMediumFree() {
+  std::cerr << "OnMediumFree: " << this << std::endl;
   medium_busy_ = false;
   if (state_ == WAITING_TO_TRANSMIT) {
     state_ = SENSING;
@@ -65,6 +74,7 @@ void Computer::OnMediumFree() {
 }
 
 void Computer::OnTransmittedFrame() {
+  std::cerr << "OnTransmittedFrame: " << this << std::endl;
   Event* rec = new PacketReceivedEvent(this);
   events_->Insert(rec);
   cancellable_events_.push_back(rec);
@@ -79,6 +89,7 @@ void Computer::OnTransmittedFrame() {
 }
 
 void Computer::OnRaspberryJam() {
+  std::cerr << "OnRaspberryJam: " << this << std::endl;
   last_jam_time_ = Clock::GetTime();
   if (state_ == TRANSMITTING) {
     CancelEvents();
@@ -93,11 +104,13 @@ void Computer::OnRaspberryJam() {
 }
 
 void Computer::OnBackoffDone() {
+  std::cerr << "OnBackoffDone: " << this << std::endl;
   state_ = SENSING;
   events_->Insert(new MediumSensedEvent(this));
 }
 
 void Computer::OnPacketReceived() {
+  std::cerr << "OnPacketReceived: " << this << std::endl;
   if (last_jam_time_ - Environment::PROP_TIME < Clock::GetTime()) {
     Router::GetInstance().OnPacketDropped(this);
   } else {
