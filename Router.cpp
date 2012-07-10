@@ -5,6 +5,8 @@
 
 using namespace std;
 
+Router Router::instance_;
+
 void Router::OnPacketGenerated(Computer* comp) {
   queue<unsigned long long> q = packetGeneratedTimes_[comp];
   q.push(Clock::GetTime());
