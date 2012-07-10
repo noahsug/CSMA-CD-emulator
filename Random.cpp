@@ -111,6 +111,10 @@ unsigned long GetInt() {
   return y;
 }
 
+unsigned long GetInt(unsigned long max) {
+  return GetInt() % max;
+}
+
 double GetDouble() {
   return ((double)GetInt() / (unsigned long)0xFFFFFFFF);
 }

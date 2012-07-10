@@ -37,26 +37,32 @@ MediumSensedEvent::MediumSensedEvent(Computer* dest) {
 
 MediumBusyEvent::MediumBusyEvent(Computer* dest) {
   dest_ = dest;
-  time_ = Clock::GetTime() + 5; // TODO this will not always be 5 :O
+  time_ = Clock::GetTime() + 2*Environment::PROP_TIME;
 }
 
 MediumFreeEvent::MediumFreeEvent(Computer* dest) {
   dest_ = dest;
-  time_ = Clock::GetTime() + 5; // TODO see above todo D:
+  time_ = Clock::GetTime() + Environment::PACKET_LENGTH;
 }
 
 TransmittedFrameEvent::TransmittedFrameEvent(Computer* dest) {
   dest_ = dest;
-  time_ = Clock::GetTime() + 5; // TODO see above todo D:
+  time_ = Clock::GetTime() + Environment::PACKET_LENGTH;
 }
 
 RaspberryJamEvent::RaspberryJamEvent(Computer* dest) {
   dest_ = dest;
-  time_ = Clock::GetTime() + 5; // TODO see above todo D:
+  time_ = Clock::GetTime() + 2*Environment::PROP_TIME;
 }
 
 BackoffDoneEvent::BackoffDoneEvent(Computer* dest) {
   dest_ = dest;
-  time_ = Clock::GetTime() + 5; // TODO see above todo D:
+  time_ = Clock::GetTime() +
+      Computer::TP * Random::GetInt(2 >> (dest->GetBackoff() - 1));
+}
+
+PacketReceivedEvent::PacketReceivedEvent(Computer* dest) {
+  dest_ = dest;
+  time_ = Clock::GetTime() + Environment::PROP_TIME;
 }
 

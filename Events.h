@@ -14,7 +14,8 @@ class Event {
     EVENT_MEDIUM_FREE, // medium is now free
     EVENT_TRANSMITTED_FRAME, // frame successfully transmitted
     EVENT_JAM, // jamming event arrived at comp
-    EVENT_BACKOFF_DONE // backoff finished
+    EVENT_BACKOFF_DONE, // backoff finished
+    EVENT_PACKET_RECEIVED // router received packet sucesfully
   };
 
   virtual unsigned long long GetTime() { return time_; }
@@ -78,6 +79,13 @@ class BackoffDoneEvent : public Event {
   BackoffDoneEvent(Computer* dest);
   virtual EventType GetType() { return EVENT_BACKOFF_DONE; }
   virtual void HandleEvent() { dest_->OnBackoffDone(); }
+};
+
+class PacketReceivedEvent : public Event {
+ public:
+  PacketReceivedEvent(Computer* dest);
+  virtual EventType GetType() { return EVENT_PACKET_RECEIVED; }
+  virtual void HandleEvent() { dest_->OnPacketReceived(); }
 };
 
 #endif
