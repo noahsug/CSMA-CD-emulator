@@ -1,9 +1,12 @@
+class Computer;
+
 class Event {
  public:
-  Event() {}
+  Event(Computer* dest): dest_(dest) {}
 
   enum EventType {
-    EVENT_ARRIVAL
+    EVENT_ARRIVAL,
+    EVENT_MEDIUM_IN_USE
   };
 
   virtual unsigned long long GetEventTime() { return time_; }
@@ -15,6 +18,7 @@ class Event {
   bool operator>=(const Event&);
 
  protected:
+  Computer* dest_;
   unsigned long long time_;
 };
 
@@ -24,3 +28,8 @@ class ArrivalEvent : public Event {
   virtual EventType GetEventType() { return EVENT_ARRIVAL; }
 };
 
+class MediumInUseEvent : public Event {
+ public:
+  ArrivalEvent(unsigned long long time, Computer* source);
+  virtual EventType GetEventType() { return EVENT_MEDIUM_IN_USE; }
+};
