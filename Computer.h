@@ -13,7 +13,6 @@ class Computer {
   static const unsigned TP = 512;
   static const unsigned JAMMING_LENGTH = 48;
   static const unsigned SENSE_MEDIUM_TIME = 96;
-  static const unsigned COMP_DISTANCE = 200;
 
   Computer(PriorityQueue<Event*>* events, unsigned distance)
     : events_(events)
