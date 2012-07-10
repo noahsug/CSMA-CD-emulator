@@ -21,9 +21,9 @@ class Computer {
     BACKING_OFF,
   };
 
-  Computer(PriorityQueue<Event*>* events, unsigned distance)
+  Computer(PriorityQueue* events, unsigned distance)
     : events_(events)
-    , state_(STATE_IDLE)
+    , state_(IDLE)
     , distance_from_router_(distance)
     , medium_busy_(false)
     , backoff_count_(0)
@@ -35,7 +35,7 @@ class Computer {
   void OnMediumFree();
 
  private:
-  PriorityQueue<Event*>* events_;
+  PriorityQueue* events_;
   State state_;
   unsigned distance_from_router_;
   bool medium_busy_;

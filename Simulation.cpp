@@ -23,7 +23,7 @@ void Simulation::Run() {
   bool ended = false;
   Clock::SetTime(0);
 
-  PriorityQueue<Event*> events;
+  PriorityQueue events;
   vector<Computer> computers;
 
   for (int i = 0; i < number_computers_; i++) {
