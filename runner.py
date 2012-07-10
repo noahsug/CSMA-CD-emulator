@@ -8,14 +8,18 @@ maxN = 20
 name = 's1'
 argc = len(sys.argv)
 
+if argc > 1 and (sys.argv[1][:2] == '-h' or sys.argv[1][:1] == 'h'):
+    print 'Usage: python runner.py file_name, A, W, L, max_N'
+    exit()
+
 if argc > 1:
-    A = sys.argv[1]
+    name = sys.argv[1]
 if argc > 2:
-    W = sys.argv[2]
+    A = sys.argv[2]
 if argc > 3:
-    L = sys.argv[3]
+    W = sys.argv[3]
 if argc > 4:
-    name = sys.argv[4]
+    L = sys.argv[4]
 if argc > 5:
     maxN = sys.argv[5]
 
