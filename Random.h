@@ -5,6 +5,7 @@ namespace Random {
     void Seed(unsigned long);
 
     unsigned long GetInt();
+    unsigned long GetInt(unsigned long max);
     double GetDouble();
 };
 

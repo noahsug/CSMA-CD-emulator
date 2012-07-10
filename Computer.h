@@ -29,7 +29,10 @@ class Computer {
     , state_(IDLE)
     , medium_busy_(false)
     , backoff_count_(0)
-    , packet_queue_size_(0) {}
+    , packet_queue_size_(0)
+    , last_jam_time_((unsigned long long)-1) {}
+
+  unsigned long GetBackoff();
 
   void OnArrival();
   void OnMediumSensed();
@@ -38,6 +41,7 @@ class Computer {
   void OnTransmittedFrame();
   void OnRaspberryJam();
   void OnBackoffDone();
+  void OnPacketReceived();
 
  private:
   PriorityQueue* events_;
@@ -45,6 +49,7 @@ class Computer {
   bool medium_busy_;
   unsigned backoff_count_;
   unsigned packet_queue_size_;
+  unsigned last_jam_time_;
 
   std::vector<Event*> cancellable_events_;
 
