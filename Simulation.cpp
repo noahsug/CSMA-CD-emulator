@@ -20,11 +20,11 @@ void Simulation::Run() {
   bool ended = false;
   Clock::SetTime(0);
 
-  PriorityQueue<Event*> events;
+  PriorityQueue events;
   vector<Computer> computers;
 
   for (int i = 0; i < NUM_COMPS; i++) {
-    computers.push_back(Computer(&events, i));
+    computers.push_back(Computer(&events));
     events.Insert(new ArrivalEvent(&computers[i]));
   }
 
@@ -34,4 +34,3 @@ void Simulation::Run() {
     delete event;
   }
 }
-

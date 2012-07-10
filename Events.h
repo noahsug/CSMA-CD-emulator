@@ -15,7 +15,7 @@ class Event {
     EVENT_MEDIUM_FREE, // medium is now free
     EVENT_TRANSMITTED_FRAME, // frame successfully transmitted
     EVENT_JAM, // jamming event arrived at comp
-    BACKOFF_DONE // backoff finished
+    EVENT_BACKOFF_DONE // backoff finished
   };
 
   virtual unsigned long long GetEventTime() { return time_; }
