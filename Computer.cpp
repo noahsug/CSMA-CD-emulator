@@ -59,7 +59,7 @@ void Computer::OnMediumFree() {
 }
 
 void Computer::OnTransmittedFrame() {
-  Router::FrameTransmitted();
+  //Router::FrameTransmitted();
   packet_queue_size_--;
   if (packet_queue_size_ > 0) {
     state_ = SENSING;

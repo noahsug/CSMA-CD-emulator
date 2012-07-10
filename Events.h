@@ -47,7 +47,7 @@ class MediumSensedEvent : public Event {
 
 class MediumBusyEvent : public Event {
  public:
-  MediumBusyEvent(Computer* dest, Computer* source);
+  MediumBusyEvent(Computer* dest);
   virtual EventType GetType() { return EVENT_MEDIUM_BUSY; }
   virtual void HandleEvent() { dest_->OnMediumBusy(); }
 };
@@ -66,11 +66,11 @@ class TransmittedFrameEvent : public Event {
   virtual void HandleEvent() { dest_->OnTransmittedFrame(); }
 };
 
-class JamEvent : public Event {
+class RaspberryJamEvent : public Event {
  public:
-  JamEvent(Computer* dest);
+  RaspberryJamEvent(Computer* dest);
   virtual EventType GetType() { return EVENT_JAM; }
-  virtual void HandleEvent() { dest_->OnJam(); }
+  virtual void HandleEvent() { dest_->OnRaspberryJam(); }
 };
 
 class BackoffDoneEvent : public Event {

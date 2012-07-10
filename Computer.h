@@ -47,6 +47,8 @@ class Computer {
   unsigned packet_queue_size_;
 
   std::vector<Event*> cancellable_events_;
+
+  void CancelEvents();
 };
 
 #endif
