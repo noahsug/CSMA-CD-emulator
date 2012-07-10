@@ -47,8 +47,6 @@ void Computer::OnMediumSensed() {
 void Computer::OnMediumBusy() {
   PRINT(this << ": " << Clock::GetTime() << ": OnMediumBusy" << std::endl);
 
-  medium_busy_ = true;
-
   if (state_ == TRANSMITTING) {
     CancelEvents();
     for (unsigned i = 0; i < computers.size(); i++) {
@@ -61,6 +59,7 @@ void Computer::OnMediumBusy() {
     events_->Insert(new BackoffDoneEvent(this));
     last_jam_time_ = Clock::GetTime();
   } else {
+    medium_busy_ = true;
     Event* free = new MediumFreeEvent(this);
     events_->Insert(free);
     cancellable_events_.push_back(free->GetId());
