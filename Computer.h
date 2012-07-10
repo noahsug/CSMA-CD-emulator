@@ -1,24 +1,34 @@
 #ifndef __COMPUTER_H__
 #define __COMPUTER_H__
 
-#include "Events.h"
+#include "PriorityQueue.h"
+
+class Event;
 
 class Computer {
-  static const int KMAX = 10;
+ public:
+  static const unsigned KMAX = 10;
 
   // values are in bit-times
-  static const int TP = 512;
-  static const int JAMMING_LENGTH = 48;
-  static const int SENSE_MEDIUM_TIME = 96;
-  static const int COMP_DISTANCE = 200;
+  static const unsigned TP = 512;
+  static const unsigned JAMMING_LENGTH = 48;
+  static const unsigned SENSE_MEDIUM_TIME = 96;
+  static const unsigned COMP_DISTANCE = 200;
 
- public:
-  Computer(int distance): distance_from_router_(distance) {}
+  Computer(PriorityQueue<Event*>* events, unsigned distance)
+    : events_(events)
+    , distance_from_router_(distance)
+    , medium_busy_(false) {}
 
-  void OnEvent(Event* event);
+  void OnArrival(unsigned long long time);
+  void OnMediumInUse(unsigned long long time);
+  void OnMediumBusy(unsigned long long time);
+  void OnMediumFree(unsigned long long time);
 
- protected:
-  unsigned int distance_from_router_;
+ private:
+  PriorityQueue<Event*>* events_;
+  unsigned distance_from_router_;
+  bool medium_busy_;
 };
 
 #endif

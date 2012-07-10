@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <iostream>
 
+#include "Events.h"
 #include "Simulation.h"
 
 using std::cerr;
@@ -16,6 +17,8 @@ int main(int argc, char** argv) {
   double lan_speed = atof(argv[3]);
   int packet_length = atoi(argv[4]);
 
-  Simulation(number_computers, arrival_rate, lan_speed, packet_length);
+  ArrivalEvent::ARRIAVL_RATE = arrival_rate;
+
+  Simulation(number_computers, lan_speed, packet_length);
 }
 

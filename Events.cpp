@@ -21,10 +21,12 @@ bool Event::operator>=(const Event& e) {
   return time_ >= e.time_;
 }
 
-ArrivalEvent::ArrivalEvent(unsigned long long time, Computer* dest, double arrival_rate) {
+double ArrivalEvent::ARRIAVL_RATE = 0;
+
+ArrivalEvent::ArrivalEvent(unsigned long long time, Computer* dest) {
   dest_ = dest;
   double rand = Random::GetDouble();
-  time_ = time + (unsigned long long)((-1 / arrival_rate) * log(1 - rand));
+  time_ = time + (unsigned long long)((-1 / ARRIAVL_RATE) * log(1 - rand));
 }
 
 MediumInUseEvent::MediumInUseEvent(unsigned long long time, Computer* dest, Computer* source) {

@@ -1,3 +1,6 @@
+#ifndef __PRIORITY_QUEUE_H__
+#define __PRIORITY_QUEUE_H__
+
 #include <list>
 
 template<class T>
@@ -28,7 +31,13 @@ void PriorityQueue<T>::Insert(const T& obj) {
 template <class T>
 T PriorityQueue<T>::Remove() {
   T obj = list_.front();
-  list_.pop_front();
+
+  if (list_.size() > 0) {
+    list_.pop_front();
+  }
+
   return obj;
 }
+
+#endif
 
