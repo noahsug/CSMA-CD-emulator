@@ -6,19 +6,16 @@
 using std::cerr;
 
 int main(int argc, char** argv) {
-  double arrival_rate = 0;
-  double lan_speed = 0;
-  int packet_length = 0;
-
   if (argc != 4) {
-    cerr << "Usage: ./" << argv[0] << " A W L\n";
+    cerr << "Usage: ./" << argv[0] << " N A W L\n";
     return -1;
   }
 
-  arrival_rate = atof(argv[1]);
-  lan_speed = atof(argv[2]);
-  packet_length = atoi(argv[3]);
+  unsigned number_computers = atoi(argv[1]);
+  double arrival_rate = atof(argv[2]);
+  double lan_speed = atof(argv[3]);
+  int packet_length = atoi(argv[4]);
 
-  Simulation(arrival_rate, lan_speed, packet_length);
+  Simulation(number_computers, arrival_rate, lan_speed, packet_length);
 }
 
