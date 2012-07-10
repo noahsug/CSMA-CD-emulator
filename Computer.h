@@ -18,17 +18,19 @@ class Computer {
     : events_(events)
     , distance_from_router_(distance)
     , medium_busy_(false)
+    , waiting_to_transmit_(false)
     , backoff_count_(0) {}
 
-  void OnArrival(unsigned long long time);
-  void OnMediumInUse(unsigned long long time);
-  void OnMediumBusy(unsigned long long time);
-  void OnMediumFree(unsigned long long time);
+  void OnArrival();
+  void OnMediumSensed();
+  void OnMediumBusy();
+  void OnMediumFree();
 
  private:
   PriorityQueue<Event*>* events_;
   unsigned distance_from_router_;
   bool medium_busy_;
+  unsigned waiting_to_transmit_;
   unsigned backoff_count_;
 };
 

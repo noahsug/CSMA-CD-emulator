@@ -11,8 +11,8 @@ class Event {
     EVENT_ARRIVAL, // packet arrived at comp
     EVENT_MEDIUM_BUSY, // medium is now in use at a certain comp
     EVENT_RECEIVED, // packet received by router
-    EVENT_MEDIUM_SENSED, // medium sensing finished
-    EVENT_MEDIUM_FREE // medium is free again
+    EVENT_MEDIUM_SENSED, // medium free for the entire time
+    EVENT_MEDIUM_FREE
   };
 
   virtual unsigned long long GetEventTime() { return time_; }
@@ -31,18 +31,33 @@ class Event {
 
 class ArrivalEvent : public Event {
  public:
-  ArrivalEvent(unsigned long long time, Computer* dest);
+  ArrivalEvent(Computer* dest);
   virtual EventType GetEventType() { return EVENT_ARRIVAL; }
-  virtual void HandleEvent() { dest_->OnArrival(time_); }
+  virtual void HandleEvent() { dest_->OnArrival(); }
 
   static double ARRIAVL_RATE;
 };
 
+class MediumSensedEvent : public Event {
+ public:
+  MediumSensedEvent(Computer* dest);
+  virtual EventType GetEventType() { return EVENT_MEDIUM_SENSED; }
+  virtual void HandleEvent() { dest_->OnMediumSensed(); }
+};
+
 class MediumBusyEvent : public Event {
  public:
-  MediumBusyEvent(unsigned long long time, Computer* dest, Computer* source);
+  MediumBusyEvent(Computer* dest, Computer* source);
   virtual EventType GetEventType() { return EVENT_MEDIUM_BUSY; }
-  virtual void HandleEvent() { dest_->OnMediumInUse(time_); }
+  virtual void HandleEvent() { dest_->OnMediumBusy(); }
+};
+
+class MediumFreeEvent : public Event {
+ public:
+  MediumFreeEvent(Computer* dest);
+  virtual EventType GetEventType() { return EVENT_MEDIUM_FREE; }
+  virtual void HandleEvent() { dest_->OnMediumFree(); }
 };
 
 #endif
+

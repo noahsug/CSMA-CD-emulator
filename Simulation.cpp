@@ -2,11 +2,14 @@
 
 #include <vector>
 
+#include "Clock.h"
 #include "Computer.h"
 #include "Events.h"
 #include "PriorityQueue.h"
 
 using std::vector;
+
+unsigned long long Clock::time_ = 0;
 
 Simulation::Simulation(unsigned number_computers, double lan_speed, int packet_length)
     : number_computers_(number_computers)
@@ -17,14 +20,14 @@ Simulation::Simulation(unsigned number_computers, double lan_speed, int packet_l
 
 void Simulation::Run() {
   bool ended = false;
-  unsigned long long clock = 0;
+  Clock::SetTime(0);
 
   PriorityQueue<Event*> events;
   vector<Computer> computers;
 
   for (int i = 0; i < number_computers_; i++) {
     computers.push_back(Computer(&events, Computer::COMP_DISTANCE * (i + 1)));
-    events.Insert(new ArrivalEvent(clock, &computers[i]));
+    events.Insert(new ArrivalEvent(&computers[i]));
   }
 
   for (int i = 0; i < 10; i++) {
