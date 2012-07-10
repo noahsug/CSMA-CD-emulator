@@ -19,7 +19,8 @@ class Computer {
     , distance_from_router_(distance)
     , medium_busy_(false)
     , waiting_to_transmit_(false)
-    , backoff_count_(0) {}
+    , backoff_count_(0)
+    , packet_queue_size_(0) {}
 
   void OnArrival();
   void OnMediumSensed();
@@ -32,6 +33,7 @@ class Computer {
   bool medium_busy_;
   unsigned waiting_to_transmit_;
   unsigned backoff_count_;
+  unsigned packet_queue_size_;
 };
 
 #endif
