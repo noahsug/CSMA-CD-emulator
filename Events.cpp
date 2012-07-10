@@ -44,3 +44,18 @@ MediumFreeEvent::MediumFreeEvent(Computer* dest) {
   time_ = Clock::GetTime() + 5; // TODO see above todo D:
 }
 
+TransmittedFrameEvent::TransmittedFrameEvent(Computer* dest) {
+  dest_ = dest;
+  time_ = Clock::GetTime() + 5; // TODO see above todo D:
+}
+
+JamEvent::JamEvent(Computer* dest) {
+  dest_ = dest;
+  time_ = Clock::GetTime() + 5; // TODO see above todo D:
+}
+
+BackoffDoneEvent::BackoffDoneEvent(Computer* dest) {
+  dest_ = dest;
+  time_ = Clock::GetTime() + 5; // TODO see above todo D:
+}
+

@@ -8,9 +8,8 @@ class Event {
   Event() {}
 
   enum EventType {
-    EVENT_ARRIVAL, // packet arrived at comp
+    EVENT_ARRIVAL, // frame arrived at comp
     EVENT_MEDIUM_BUSY, // medium is now in use at a certain comp
-    EVENT_RECEIVED, // packet received by router
     EVENT_MEDIUM_SENSED, // medium sensing over
     EVENT_MEDIUM_FREE, // medium is now free
     EVENT_TRANSMITTED_FRAME, // frame successfully transmitted
@@ -58,6 +57,27 @@ class MediumFreeEvent : public Event {
   MediumFreeEvent(Computer* dest);
   virtual EventType GetEventType() { return EVENT_MEDIUM_FREE; }
   virtual void HandleEvent() { dest_->OnMediumFree(); }
+};
+
+class TransmittedFrameEvent : public Event {
+ public:
+  TransmittedFrameEvent(Computer* dest);
+  virtual EventType GetEventType() { return EVENT_TRANSMITTED_FRAME; }
+  virtual void HandleEvent() { dest_->OnTransmittedFrame(); }
+};
+
+class JamEvent : public Event {
+ public:
+  JamEvent(Computer* dest);
+  virtual EventType GetEventType() { return EVENT_JAM; }
+  virtual void HandleEvent() { dest_->OnJam(); }
+};
+
+class BackoffDoneEvent : public Event {
+ public:
+  BackoffDoneEvent(Computer* dest);
+  virtual EventType GetEventType() { return EVENT_BACKOFF_DONE; }
+  virtual void HandleEvent() { dest_->OnBackoffDone(); }
 };
 
 #endif
