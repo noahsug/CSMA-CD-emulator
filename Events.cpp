@@ -2,8 +2,8 @@
 
 #include "Random.h"
 
-ArrivalEvent::ArrivalEvent(unsigned long long clock) {
+ArrivalEvent::ArrivalEvent(unsigned long long time) {
   double rand = Random::GetDouble();
-  clock_ = clock + (-1 / arrival_rate) * log(1 - rand);
+  time_ = time + (-1 / arrival_rate) * log(1 - rand);
 }
 

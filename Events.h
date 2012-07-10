@@ -6,17 +6,16 @@ class Event {
     EVENT_ARRIVAL;
   };
 
-  virtual unsigned long long GetEventTime() = 0;
+  virtual unsigned long long GetEventTime() { return time_; }
   virtual EventType GetEventType() = 0;
+
+ protected:
+  unsigned long long time_;
 };
 
 class ArrivalEvent : public Event {
  public:
   ArrivalEvent(unsigned long long clock);
-  virtual unsigned long long GetEventTime() { return time_; }
   virtual EventType GetEventType() { return EVENT_ARRIVAL; }
-
- private:
-  unsigned long long clock_;
 };
 
