@@ -3,15 +3,14 @@
 
 class Simulation {
  public:
-  Simulation(unsigned, double, double, int);
+  Simulation(unsigned, double, int);
 
  private:
   void Run();
 
-	unsigned number_computers_;
-	double arrival_time_;
-	double lan_speed_;
-	int packet_length_;
+  unsigned number_computers_;
+  double lan_speed_;
+  int packet_length_;
 };
 
 #endif
