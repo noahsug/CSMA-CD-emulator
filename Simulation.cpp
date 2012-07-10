@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 
+#include "Debug.h"
 #include "Environment.h"
 #include "Clock.h"
 #include "Computer.h"
@@ -14,7 +15,7 @@
 using std::vector;
 
 unsigned long long Clock::time_ = 0;
-static const unsigned NUM_EVENTS = 100000; // number of events before simulation ends
+static const unsigned NUM_EVENTS = 10000000; // number of events before simulation ends
 
 PriorityQueue events;
 vector<Computer*> computers;
@@ -48,8 +49,8 @@ void Simulation::Run() {
   }
 
   Environment::GameOverMan = true;
-  std::cerr << "Game Over" << std::endl;
-  std::cerr << packets_left << " Packets Left" << std::endl;
+  PRINT("Game Over" << std::endl);
+  PRINT(packets_left << " Packets Left" << std::endl);
 
   while (!events.Empty()) {
     Event* event = events.Remove();

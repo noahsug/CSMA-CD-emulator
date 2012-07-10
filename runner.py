@@ -5,6 +5,7 @@ A = 100
 W = 10
 L = 500
 maxN = 20
+minN = 1
 name = 's1'
 argc = len(sys.argv)
 
@@ -22,10 +23,12 @@ if argc > 4:
     L = sys.argv[4]
 if argc > 5:
     maxN = int(sys.argv[5])
+if argc > 6:
+    minN = int(sys.argv[6])
 
 f = open('%s.csv' % name, 'w')
 
-for N in range(1, maxN + 1):
+for N in range(minN, maxN + 1):
     cmd = './Simulation {0} {1} {2} {3}'.format(N, A, W, L)
     print cmd
 

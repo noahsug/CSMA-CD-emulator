@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
   Environment::PACKET_LENGTH = atoi(argv[4]);
 
   Environment::ARRIVAL_RATE = atof(argv[2]) / (Environment::LAN_SPEED * 1000000);
-  Environment::PROP_TIME = (unsigned) (150 * Environment::LAN_SPEED);
+  Environment::PROP_TIME = 300;
 
   Simulation();
 }
