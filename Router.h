@@ -7,7 +7,7 @@
 
 class Computer;
 
-// Calculates statistics about the system
+// Calculates statistics about the system. Is not actually a router.
 class Router {
   static Router instance_;
 
@@ -16,6 +16,7 @@ class Router {
   void OnPacketDropped(Computer*);
   void OnPacketGenerated(Computer*);
   void OnPacketTransmitted(Computer*);
+  void PrintStatistics();
 
  private:
   Router() {}

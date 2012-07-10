@@ -31,3 +31,8 @@ void Router::OnPacketTransmitted(Computer* comp) {
   q.pop();
   totalPacketDelay_ += delay;
 }
+
+void Router::PrintStatistics() {
+  cout << "Received " << packetsArrived_ << " packets" << endl;
+  cout << "Average delay time " << (double)totalPacketDelay_ / packetsArrived_ << " bit-time" << endl;
+}
