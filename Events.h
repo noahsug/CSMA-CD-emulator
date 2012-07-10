@@ -11,8 +11,8 @@ class Event {
     EVENT_ARRIVAL, // packet arrived at comp
     EVENT_MEDIUM_BUSY, // medium is now in use at a certain comp
     EVENT_RECEIVED, // packet received by router
-    EVENT_MEDIUM_SENSED, // medium free for the entire time
-    EVENT_MEDIUM_FREE
+    EVENT_MEDIUM_SENSED, // medium sensing finished
+    EVENT_MEDIUM_FREE // medium is free again
   };
 
   virtual unsigned long long GetEventTime() { return time_; }
