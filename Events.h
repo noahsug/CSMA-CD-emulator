@@ -1,8 +1,11 @@
+#ifndef __EVENT_H__
+#define __EVENT_H__
+
 class Computer;
 
 class Event {
  public:
-  Event(Computer* dest): dest_(dest) {}
+  Event() {}
 
   enum EventType {
     EVENT_ARRIVAL,
@@ -24,12 +27,14 @@ class Event {
 
 class ArrivalEvent : public Event {
  public:
-  ArrivalEvent(unsigned long long time, double arrival_rate);
+  ArrivalEvent(unsigned long long time, Computer* dest, double arrival_rate);
   virtual EventType GetEventType() { return EVENT_ARRIVAL; }
 };
 
 class MediumInUseEvent : public Event {
  public:
-  ArrivalEvent(unsigned long long time, Computer* source);
+  MediumInUseEvent(unsigned long long time, Computer* dest, Computer* source);
   virtual EventType GetEventType() { return EVENT_MEDIUM_IN_USE; }
 };
+
+#endif
