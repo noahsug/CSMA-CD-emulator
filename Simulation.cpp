@@ -1,6 +1,5 @@
 #include "Simulation.h"
 
-#include <iostream>
 #include <vector>
 
 #include "Environment.h"
@@ -8,12 +7,13 @@
 #include "Computer.h"
 #include "Events.h"
 #include "PriorityQueue.h"
+#include "Random.h"
 #include "Router.h"
 
 using std::vector;
 
 unsigned long long Clock::time_ = 0;
-static const unsigned NUM_EVENTS = 10000; // number of events before simulation ends
+static const unsigned NUM_EVENTS = 10000000; // number of events before simulation ends
 
 PriorityQueue events;
 vector<Computer*> computers;
@@ -24,12 +24,13 @@ Simulation::Simulation() {
 }
 
 void Simulation::Run() {
+  Random::Seed(time(NULL));
+
   bool ended = false;
   Clock::SetTime(0);
 
   for (int i = 0; i < Environment::NUM_COMPS; i++) {
     computers.push_back(new Computer(&events));
-    std::cerr << "Comp" << i << ": " << computers[i] << std::endl;
     events.Insert(new ArrivalEvent(computers[i]));
   }
 

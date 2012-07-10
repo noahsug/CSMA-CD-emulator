@@ -18,6 +18,7 @@ void Router::OnPacketGenerated(Computer* comp) {
 void Router::OnPacketDropped(Computer* comp) {
   queue<unsigned long long>& q = packetGeneratedTimes_[comp];
   assert(!q.empty());
+  packetsDropped_++;
   q.pop();
 }
 
@@ -31,8 +32,9 @@ void Router::OnPacketTransmitted(Computer* comp) {
 }
 
 void Router::PrintStatistics() {
-  unsigned long long totalTime = Clock::GetTime() / (Environment::LAN_SPEED);
+  unsigned long long totalTime = (unsigned long long)(Clock::GetTime() / (Environment::LAN_SPEED * 1000000));
   cout << "Received " << packetsArrived_ << " packets" << endl;
+  cout << "Dropped " << packetsDropped_ << " packets" << endl;
   cout << "Took " << totalTime << " sec (" << Clock::GetTime() << " bit-time)" << endl;
 
   double delayTime = 0;
@@ -43,6 +45,6 @@ void Router::PrintStatistics() {
   }
   cout << "Average delay time: " << delayTimeInSecs << " secs (" << delayTime << " bit-time)" << endl;
 
-  double throughput = Environment::PACKET_LENGTH * ((double) packetsArrived_ / totalTime);
+  double throughput = Environment::PACKET_LENGTH * ((double) packetsArrived_ / totalTime) / 1000000;
   cout << "Throughput: " << throughput << " Mbps" << endl;
 }

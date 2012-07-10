@@ -19,9 +19,12 @@ class Router {
   void PrintStatistics();
 
  private:
-  Router() {}
+  Router() {
+    packetsArrived_ = packetsDropped_ = totalPacketDelay_ = 0;
+  }
   std::map<Computer*, std::queue<unsigned long long> > packetGeneratedTimes_;
   unsigned long long packetsArrived_;
+  unsigned long long packetsDropped_;
   unsigned long long totalPacketDelay_;
 };
 
