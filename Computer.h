@@ -49,7 +49,7 @@ class Computer {
   bool medium_busy_;
   unsigned backoff_count_;
   unsigned packet_queue_size_;
-  unsigned last_jam_time_;
+  unsigned long long last_jam_time_;
 
   std::vector<Event*> cancellable_events_;
 
