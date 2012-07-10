@@ -6,8 +6,8 @@
 using std::cerr;
 
 int main(int argc, char** argv) {
-  if (argc != 4) {
-    cerr << "Usage: ./" << argv[0] << " N A W L\n";
+  if (argc != 5) {
+    cerr << "Usage: " << argv[0] << " N A W L\n";
     return -1;
   }
 
