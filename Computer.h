@@ -21,10 +21,10 @@ class Computer {
     , medium_busy_(false)
     , backoff_count_(0) {}
 
-  void OnArrival(unsigned long long time);
-  void OnMediumInUse(unsigned long long time);
-  void OnMediumBusy(unsigned long long time);
-  void OnMediumFree(unsigned long long time);
+  void OnArrival();
+  void OnMediumInUse();
+  void OnMediumBusy();
+  void OnMediumFree();
 
  private:
   PriorityQueue<Event*>* events_;
