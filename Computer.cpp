@@ -17,7 +17,7 @@ void Computer::OnMediumSensed() {
 
 void Computer::OnMediumBusy() {
   medium_busy_ = true;
-  events->Insert(new MediumFree());
+  events_->Insert(new MediumFreeEvent(this));
 }
 
 void Computer::OnMediumFree() {

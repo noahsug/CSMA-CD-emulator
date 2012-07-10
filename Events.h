@@ -31,18 +31,33 @@ class Event {
 
 class ArrivalEvent : public Event {
  public:
-  ArrivalEvent(unsigned long long time, Computer* dest);
+  ArrivalEvent(Computer* dest);
   virtual EventType GetEventType() { return EVENT_ARRIVAL; }
-  virtual void HandleEvent() { dest_->OnArrival(time_); }
+  virtual void HandleEvent() { dest_->OnArrival(); }
 
   static double ARRIAVL_RATE;
 };
 
+class MediumSensedEvent : public Event {
+ public:
+  MediumSensedEvent(Computer* dest);
+  virtual EventType GetEventType() { return EVENT_MEDIUM_SENSED; }
+  virtual void HandleEvent() { dest_->OnMediumSensed(); }
+};
+
 class MediumBusyEvent : public Event {
  public:
-  MediumBusyEvent(unsigned long long time, Computer* dest, Computer* source);
+  MediumBusyEvent(Computer* dest, Computer* source);
   virtual EventType GetEventType() { return EVENT_MEDIUM_BUSY; }
-  virtual void HandleEvent() { dest_->OnMediumInUse(time_); }
+  virtual void HandleEvent() { dest_->OnMediumBusy(); }
+};
+
+class MediumFreeEvent : public Event {
+ public:
+  MediumFreeEvent(Computer* dest);
+  virtual EventType GetEventType() { return EVENT_MEDIUM_FREE; }
+  virtual void HandleEvent() { dest_->OnMediumFree(); }
 };
 
 #endif
+
