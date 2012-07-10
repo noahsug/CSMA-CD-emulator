@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "Environment.h"
 #include "Clock.h"
 #include "Computer.h"
 #include "Events.h"
@@ -26,7 +27,7 @@ void Simulation::Run() {
   vector<Computer> computers;
 
   for (int i = 0; i < number_computers_; i++) {
-    computers.push_back(Computer(&events, Computer::COMP_DISTANCE * (i + 1)));
+    computers.push_back(Computer(&events, COMP_DISTANCE * (i + 1)));
     events.Insert(new ArrivalEvent(&computers[i]));
   }
 

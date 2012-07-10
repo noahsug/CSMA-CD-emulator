@@ -13,7 +13,6 @@ class Computer {
   static const unsigned TP = 512;
   static const unsigned JAMMING_LENGTH = 48;
   static const unsigned SENSE_MEDIUM_TIME = 96;
-  static const unsigned COMP_DISTANCE = 200;
 
   enum State {
     IDLE,
@@ -27,7 +26,8 @@ class Computer {
     , state_(STATE_IDLE)
     , distance_from_router_(distance)
     , medium_busy_(false)
-    , backoff_count_(0) {}
+    , backoff_count_(0)
+    , packet_queue_size_(0) {}
 
   void OnArrival();
   void OnMediumSensed();
@@ -40,6 +40,7 @@ class Computer {
   unsigned distance_from_router_;
   bool medium_busy_;
   unsigned backoff_count_;
+  unsigned packet_queue_size_;
 };
 
 #endif
