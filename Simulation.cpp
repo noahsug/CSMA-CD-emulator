@@ -14,10 +14,7 @@ unsigned long long Clock::time_ = 0;
 
 vector<Computer> computers;
 
-Simulation::Simulation(unsigned number_computers, double lan_speed, int packet_length)
-    : number_computers_(number_computers)
-    , lan_speed_(lan_speed)
-    , packet_length_(packet_length) {
+Simulation::Simulation() {
   Run();
 }
 
@@ -27,8 +24,8 @@ void Simulation::Run() {
 
   PriorityQueue events;
 
-  for (int i = 0; i < number_computers_; i++) {
-    computers.push_back(Computer(&events, COMP_DISTANCE * (i + 1)));
+  for (int i = 0; i < Environment::NUM_COMPS; i++) {
+    computers.push_back(Computer(&events));
     events.Insert(new ArrivalEvent(&computers[i]));
   }
 

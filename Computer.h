@@ -24,10 +24,9 @@ class Computer {
     BACKING_OFF,
   };
 
-  Computer(PriorityQueue* events, unsigned distance)
+  Computer(PriorityQueue* events)
     : events_(events)
     , state_(IDLE)
-    , distance_from_router_(distance)
     , medium_busy_(false)
     , backoff_count_(0)
     , packet_queue_size_(0) {}
@@ -43,7 +42,6 @@ class Computer {
  private:
   PriorityQueue* events_;
   State state_;
-  unsigned distance_from_router_;
   bool medium_busy_;
   unsigned backoff_count_;
   unsigned packet_queue_size_;
