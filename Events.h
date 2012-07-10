@@ -8,8 +8,11 @@ class Event {
   Event() {}
 
   enum EventType {
-    EVENT_ARRIVAL,
-    EVENT_MEDIUM_IN_USE
+    EVENT_ARRIVAL, // packet arrived at comp
+    EVENT_MEDIUM_BUSY, // medium is now in use at a certain comp
+    EVENT_RECEIVED, // packet received by router
+    EVENT_MEDIUM_SENSED, // medium free for the entire time
+    EVENT_MEDIUM_FREE
   };
 
   virtual unsigned long long GetEventTime() { return time_; }
@@ -35,10 +38,10 @@ class ArrivalEvent : public Event {
   static double ARRIAVL_RATE;
 };
 
-class MediumInUseEvent : public Event {
+class MediumBusyEvent : public Event {
  public:
-  MediumInUseEvent(unsigned long long time, Computer* dest, Computer* source);
-  virtual EventType GetEventType() { return EVENT_MEDIUM_IN_USE; }
+  MediumBusyEvent(unsigned long long time, Computer* dest, Computer* source);
+  virtual EventType GetEventType() { return EVENT_MEDIUM_BUSY; }
   virtual void HandleEvent() { dest_->OnMediumInUse(time_); }
 };
 

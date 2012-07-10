@@ -18,7 +18,8 @@ class Computer {
   Computer(PriorityQueue<Event*>* events, unsigned distance)
     : events_(events)
     , distance_from_router_(distance)
-    , medium_busy_(false) {}
+    , medium_busy_(false)
+    , backoff_count_(0) {}
 
   void OnArrival(unsigned long long time);
   void OnMediumInUse(unsigned long long time);
@@ -29,6 +30,7 @@ class Computer {
   PriorityQueue<Event*>* events_;
   unsigned distance_from_router_;
   bool medium_busy_;
+  unsigned backoff_count_;
 };
 
 #endif
