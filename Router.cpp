@@ -1,6 +1,7 @@
 #include "Router.h"
 
-#include <assert.h>
+#include <cassert>
+#include <iostream>
 #include "Clock.h"
 
 using namespace std;
@@ -25,4 +26,9 @@ void Router::OnPacketTransmitted(Computer* comp) {
   unsigned long long delay = Clock::GetTime() - q.front();
   q.pop();
   totalPacketDelay_ += delay;
+}
+
+void Router::PrintStatistics() {
+  cout << "Received " << packetsArrived_ << " packets" << endl;
+  cout << "Average delay time " << totalPacketDelay_ / packetsArrived_ << " bit-time" << endl;
 }

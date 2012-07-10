@@ -7,6 +7,7 @@
 #include "Computer.h"
 #include "Events.h"
 #include "PriorityQueue.h"
+#include "Router.h"
 
 using std::vector;
 
@@ -17,6 +18,7 @@ vector<Computer> computers;
 
 Simulation::Simulation() {
   Run();
+  Router::GetInstance().PrintStatistics();
 }
 
 void Simulation::Run() {
