@@ -20,7 +20,7 @@ class Event {
 
 class ArrivalEvent : public Event {
  public:
-  ArrivalEvent(unsigned long long clock, double arrival_rate);
+  ArrivalEvent(unsigned long long time, double arrival_rate);
   virtual EventType GetEventType() { return EVENT_ARRIVAL; }
 };
 
