@@ -3,6 +3,7 @@
 #include <cassert>
 #include <iostream>
 
+#include "Environment.h"
 #include "Clock.h"
 #include "Debug.h"
 
@@ -34,8 +35,18 @@ void Router::OnPacketTransmitted(Computer* comp) {
 }
 
 void Router::PrintStatistics() {
+  unsigned long long totalTime = Clock::GetTime() / (Environment::LAN_SPEED);
   cout << "Received " << packetsArrived_ << " packets" << endl;
+  cout << "Took " << totalTime << " sec (" << Clock::GetTime() << " bit-time)" << endl;
+
+  double delayTime = 0;
+  double delayTimeInSecs = 0;
   if (packetsArrived_ > 0) {
-      cout << "Average delay time " << (double)totalPacketDelay_ / packetsArrived_ << " bit-time" << endl;
+    delayTime = (double)totalPacketDelay_ / packetsArrived_;
+    delayTimeInSecs = delayTime / (Environment::LAN_SPEED * 1000000);
   }
+  cout << "Average delay time: " << delayTimeInSecs << " secs (" << delayTime << " bit-time)" << endl;
+
+  double throughput = Environment::PACKET_LENGTH * ((double) packetsArrived_ / totalTime);
+  cout << "Throughput: " << throughput << " Mbps" << endl;
 }
