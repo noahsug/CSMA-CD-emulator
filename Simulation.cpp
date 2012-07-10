@@ -31,7 +31,7 @@ void Simulation::Run() {
 
   for (int i = 0; i < NUM_EVENTS; i++) {
     Event* event = events.Remove();
-    Clock::SetTime(event->GetTime())
+    Clock::SetTime(event->GetTime());
     event->HandleEvent();
     delete event;
   }
