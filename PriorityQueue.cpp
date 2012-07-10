@@ -12,7 +12,7 @@ PriorityQueue::~PriorityQueue() {
 void PriorityQueue::Insert(Event* obj) {
   List::iterator it;
   for (it = list_.begin(); it != list_.end(); ++it) {
-    if (*obj < **it) {
+    if (*obj <= **it) {
       list_.insert(it, obj);
       return;
     }

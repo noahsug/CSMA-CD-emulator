@@ -59,7 +59,7 @@ RaspberryJamEvent::RaspberryJamEvent(Computer* dest) {
 BackoffDoneEvent::BackoffDoneEvent(Computer* dest) {
   dest_ = dest;
   unsigned long b = dest->GetBackoff();
-  unsigned long val = (1 >> b) - 1;
+  unsigned long val = (1 << b) - 1;
   unsigned long rand = Random::GetInt(val);
   time_ = Clock::GetTime() + Computer::TP * rand;
 }
