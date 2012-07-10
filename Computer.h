@@ -14,9 +14,9 @@ class Computer {
   static const unsigned JAMMING_LENGTH = 48;
   static const unsigned SENSE_MEDIUM_TIME = 96;
 
-  Computer(PriorityQueue<Event*>* events, unsigned distance)
+  Computer(PriorityQueue<Event*>* events, unsigned position)
     : events_(events)
-    , distance_from_router_(distance)
+    , position_(position)
     , medium_busy_(false)
     , waiting_to_transmit_(false)
     , backoff_count_(0)
@@ -29,7 +29,7 @@ class Computer {
 
  private:
   PriorityQueue<Event*>* events_;
-  unsigned distance_from_router_;
+  unsigned position_;
   bool medium_busy_;
   unsigned waiting_to_transmit_;
   unsigned backoff_count_;

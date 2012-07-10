@@ -1,4 +1,5 @@
 #include "Events.h"
+#include "Environment.h"
 #include "Computer.h"
 
 #include <cmath>
@@ -22,12 +23,10 @@ bool Event::operator>=(const Event& e) {
   return time_ >= e.time_;
 }
 
-double ArrivalEvent::ARRIAVL_RATE = 0;
-
 ArrivalEvent::ArrivalEvent(Computer* dest) {
   dest_ = dest;
   double rand = Random::GetDouble();
-  time_ = Clock::GetTime() + (unsigned long long)((-1 / ARRIAVL_RATE) * log(1 - rand));
+  time_ = Clock::GetTime() + (unsigned long long)((-1 / ARRIVAL_RATE) * log(1 - rand));
 }
 
 MediumSensedEvent::MediumSensedEvent(Computer* dest) {

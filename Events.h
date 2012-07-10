@@ -37,8 +37,6 @@ class ArrivalEvent : public Event {
   ArrivalEvent(Computer* dest);
   virtual EventType GetEventType() { return EVENT_ARRIVAL; }
   virtual void HandleEvent() { dest_->OnArrival(); }
-
-  static double ARRIAVL_RATE;
 };
 
 class MediumSensedEvent : public Event {
