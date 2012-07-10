@@ -8,8 +8,10 @@ class Event {
   Event() {}
 
   enum EventType {
-    EVENT_ARRIVAL,
-    EVENT_MEDIUM_IN_USE
+    EVENT_ARRIVAL, // packet arrived at comp
+    EVENT_MEDIUM_IN_USE, // medium is now in use at a certain comp
+    EVENT_RECEIVED, // packet received by router
+    EVENT_MEDIUM_SENSING //
   };
 
   virtual unsigned long long GetEventTime() { return time_; }

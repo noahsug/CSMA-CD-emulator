@@ -13,11 +13,12 @@ class Computer {
   static const int COMP_DISTANCE = 200;
 
  public:
-  Computer(int distance): distance_from_router_(distance) {}
+  Computer(int distance): distance_from_router_(distance), i_(0) {}
 
   void OnEvent(Event* event);
 
- protected:
+ private:
+  unsigned int i_;
   unsigned int distance_from_router_;
 };
 
