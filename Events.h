@@ -1,3 +1,6 @@
+#ifndef __EVENT_H__
+#define __EVENT_H__
+
 class Event {
  public:
   Event() {}
@@ -23,4 +26,6 @@ class ArrivalEvent : public Event {
   ArrivalEvent(unsigned long long time, double arrival_rate);
   virtual EventType GetEventType() { return EVENT_ARRIVAL; }
 };
+
+#endif
 
