@@ -15,11 +15,18 @@ class Computer {
   static const unsigned SENSE_MEDIUM_TIME = 96;
   static const unsigned COMP_DISTANCE = 200;
 
+  enum State {
+    IDLE,
+    WAITING_TO_TRANSMIT,
+    TRANSMITTING,
+    BACKING_OFF,
+  };
+
   Computer(PriorityQueue<Event*>* events, unsigned distance)
     : events_(events)
+    , state_(STATE_IDLE)
     , distance_from_router_(distance)
     , medium_busy_(false)
-    , waiting_to_transmit_(false)
     , backoff_count_(0) {}
 
   void OnArrival();
@@ -29,9 +36,9 @@ class Computer {
 
  private:
   PriorityQueue<Event*>* events_;
+  State state_;
   unsigned distance_from_router_;
   bool medium_busy_;
-  unsigned waiting_to_transmit_;
   unsigned backoff_count_;
 };
 

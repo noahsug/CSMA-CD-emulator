@@ -3,24 +3,23 @@
 
 #include <list>
 
-template<class T>
 class PriorityQueue {
  public:
   PriorityQueue() {}
 
-  void Insert(const T& obj);
-  T Remove();
+  void Insert(const Event*& obj);
+  Event* Remove();
+  void Remove(const Event*& obj);
 
   private:
-   typedef std::list<T> List;
+   typedef std::list<Event*> List;
    List list_;
 };
 
-template <class T>
-void PriorityQueue<T>::Insert(const T& obj) {
-  typename List::iterator it;
+void PriorityQueue::Insert(const Event*& obj) {
+  List::iterator it;
   for (it = list_.begin(); it != list_.end(); ++it) {
-    if (obj < *it) {
+    if (*obj < **it) {
       list_.insert(it, obj);
       return;
     }
@@ -28,15 +27,24 @@ void PriorityQueue<T>::Insert(const T& obj) {
   list_.push_back(obj);
 }
 
-template <class T>
-T PriorityQueue<T>::Remove() {
-  T obj = list_.front();
+Event* PriorityQueue::Remove() {
+  Event* obj = list_.front();
 
   if (list_.size() > 0) {
     list_.pop_front();
   }
 
   return obj;
+}
+
+void PriorityQueue::Remove(const Event*& obj) {
+  List::iterator it;
+  for (it = list_.begin(); it != list_.end(); ++it) {
+    if (obj == *it) {
+      list_.erase(it);
+      return;
+    }
+  }
 }
 
 #endif

@@ -4,26 +4,33 @@
 
 void Computer::OnArrival() {
   events_->Insert(new ArrivalEvent(this));
-  events_->Insert(new MediumSensedEvent(this));
+  if (state_ == IDLE) {
+    events_->Insert(new MediumSensedEvent(this));
+  }
 }
 
 void Computer::OnMediumSensed() {
   if (medium_busy_) {
-    waiting_to_transmit_ = true;
+    state_ = WAITING_TO_TRANSMIT;
   } else {
-    // Send packet
+    state_ = TRANSMITTING;
   }
 }
 
 void Computer::OnMediumBusy() {
   medium_busy_ = true;
-  events_->Insert(new MediumFreeEvent(this));
+
+  if (state_ == TRANSMITTING) {
+    // OSHIT. RASPBERRY JAM THYME.
+  } else {
+    events_->Insert(new MediumFreeEvent(this));
+  }
 }
 
 void Computer::OnMediumFree() {
   medium_busy_ = false;
-  if (waiting_to_transmit_) {
-    waiting_to_transmit_ = false;
+  if (state_ == WAITING_TO_TRANSMIT) {
+    state_ = IDLE;
     events_->Insert(new MediumSensedEvent(this));
   }
 }
